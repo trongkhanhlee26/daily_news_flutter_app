@@ -8,7 +8,7 @@ import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_1/features/daily_news/domain/repository/article_repository.dart';
 import 'package:retrofit/dio.dart';
 
-abstract class ArticleRepositoryImpl implements ArticleRepository{
+class ArticleRepositoryImpl implements ArticleRepository{
   final NewsApiService _newsApiService;
   ArticleRepositoryImpl(this._newsApiService);
 
@@ -38,8 +38,4 @@ abstract class ArticleRepositoryImpl implements ArticleRepository{
       return DataError(e);
     }  
   }
-}
-
-extension on HttpResponse<List<ArticleModel>> {
-  get request => null;
 }
