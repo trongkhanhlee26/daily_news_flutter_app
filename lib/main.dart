@@ -6,8 +6,9 @@ import 'package:flutter_1/features/daily_news/presentation/pages/home/daily_news
 import 'package:flutter_1/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-Future<void> main() async {
-  await initializeDependencies();
+void main() {
+  // await initializeDependencies();
+  configureDependencies();
   runApp(const MyApp());
 }
 

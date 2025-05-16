@@ -1,17 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_1/core/resources/data_state.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/remote_article_event.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/remote_article_state.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../domain/usecase/get_article.dart';
 
+@injectable
 class RemoteArticleBloc extends Bloc<RemoteArticleEvent, RemoteArticleState>{
   final GetArticleUseCase _getArticleUseCase;
   
   RemoteArticleBloc(this._getArticleUseCase) : super(const RemoteArticleLoading()){
     on<GetRemoteArticleEvent>(onGetArticle);
   }
-  
+   
   void onGetArticle(GetRemoteArticleEvent event, Emitter<RemoteArticleState> emit) async{
     final dataState = await _getArticleUseCase.call();
 
@@ -21,6 +24,7 @@ class RemoteArticleBloc extends Bloc<RemoteArticleEvent, RemoteArticleState>{
       print(dataState.error!.message);
       emit(RemoteArticleError(dataState.error!));
     } else {
+      print('Data state: $dataState');
       emit(const RemoteArticleLoading());
     }
   }

@@ -10,6 +10,7 @@ class DailyNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: _appBar(),
       body: _body(),

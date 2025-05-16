@@ -6,8 +6,10 @@ import 'package:flutter_1/features/daily_news/data/data_sources/remote/news_api_
 import 'package:flutter_1/features/daily_news/data/models/article.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_1/features/daily_news/domain/repository/article_repository.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/dio.dart';
 
+@Singleton(as: ArticleRepository)
 class ArticleRepositoryImpl implements ArticleRepository{
   final NewsApiService _newsApiService;
   ArticleRepositoryImpl(this._newsApiService);
