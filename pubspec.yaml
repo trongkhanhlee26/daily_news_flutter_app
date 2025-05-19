@@ -47,6 +47,7 @@ dependencies:
   floor_generator: ^1.5.0
   flutter_bloc: ^9.1.1
   injectable: ^2.5.0
+  shared_preferences: ^2.5.3
   
   
 

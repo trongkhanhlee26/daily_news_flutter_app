@@ -20,7 +20,7 @@ import 'features/daily_news/domain/repository/article_repository.dart' as _i532;
 import 'features/daily_news/domain/usecase/get_article.dart' as _i879;
 import 'features/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart'
     as _i452;
-import 'register_module.dart' as _i291;
+import 'injection_container.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt

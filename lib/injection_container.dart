@@ -7,6 +7,7 @@ import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/r
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'injection_container.config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final s1 = GetIt.instance;
 
@@ -17,8 +18,18 @@ final s1 = GetIt.instance;
   generateForDir: ['lib'],
 )
 
-void configureDependencies() => s1.init();
+Future<void> configureDependencies() async => await s1.init();
 
+
+@module
+abstract class RegisterModule {
+  @singleton
+  Dio get dio => Dio();
+  @singleton
+  NewsApiService newsApiService(Dio dio) => NewsApiService(dio);
+  @preResolve
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+}
 // Future<void> initializeDependencies() async {
 
 //   s1.registerSingleton<Dio>(Dio());

@@ -19,9 +19,10 @@ class RemoteArticleBloc extends Bloc<RemoteArticleEvent, RemoteArticleState>{
     final dataState = await _getArticleUseCase.call();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      print("Articles count: ${state.articles?.length}");
       emit(RemoteArticleSuccess(dataState.data!));
     } else if (dataState is DataError) {
-      print(dataState.error!.message);
+      print(dataState.error!.message);  
       emit(RemoteArticleError(dataState.error!));
     } else {
       print('Data state: $dataState');

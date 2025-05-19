@@ -1,108 +1,106 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
+import 'package:intl/intl.dart';
 
 class ArticleWidget extends StatelessWidget {
-  final ArticleEntity ? article;
-  const ArticleWidget({
-    Key? key,
-    this.article,
-    }):super(key:key);
+  final ArticleEntity? article;
+
+  const ArticleWidget({Key? key, this.article}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (article == null) return const SizedBox.shrink();
 
-    return Container(
-      padding: const EdgeInsetsDirectional.only(start: 14, end: 14, top: 10),
-      height: MediaQuery.of(context).size.width / 2.2,
-      child: Row(children: [_buildImage(context), _buildTitleAndDescription(),
-      ],
-      ),
-    );
-  }
-
-  Widget _buildImage(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: article!.urlToImage!,
-      imageBuilder: (context, imageProvider) => Padding(
-        padding: const EdgeInsetsDirectional.only(end: 14),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width / 3,
-            height: double.maxFinite,
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 20),
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      ),
-      progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
-        padding: const EdgeInsetsDirectional.only(end: 14),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width / 3,
-            height: double.maxFinite,
-            child: const CupertinoActivityIndicator(),
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 20),
-          
-            ),
-      
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTitleAndDescription() {
-    return Expanded(
-      child: Padding(padding: const EdgeInsets.symmetric(vertical: 7),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              article!.title?? '',
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: 'Butler',
-                fontSize: 18,
-                fontWeight: FontWeight.w900,
-                color: Colors.black,
-              ),
-            ),
-            
-            Expanded(child: Padding(padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                article!.description?? '',
-                maxLines: 2,
-              ),
-            )),
-
-            Row(
-              children: [const Icon(Icons.timeline_outlined, size: 16,),
-                const SizedBox(width: 4,),
-                Text(
-                  article!.publishedAt!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                  
+            _buildImage(context),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    article!.title ?? '',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    article!.description ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(Icons.access_time_rounded, size: 16, color: Colors.grey),
+                      const SizedBox(width: 6),
+                      Text(
+                        _formatDate(article!.publishedAt),
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      )
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    final imageUrl = article?.urlToImage;
+    if (imageUrl == null || imageUrl.isEmpty) {
+      return Container(
+        width: MediaQuery.of(context).size.width / 3,
+        height: double.infinity,
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[300],
+      ),
+      child: const Icon(Icons.image, size: 40, color: Colors.grey),
+    );
+    }
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      child: CachedNetworkImage(
+        imageUrl: article!.urlToImage!,
+        height: 180,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            Container(height: 180, color: Colors.grey[300], child: const Center(child: CircularProgressIndicator())),
+        errorWidget: (context, url, error) =>
+            Container(height: 180, color: Colors.grey[300], child: const Icon(Icons.broken_image)),
+      ),
+    );
+  }
+
+  String _formatDate(String? date) {
+    if (date == null) return '';
+    try {
+      final parsedDate = DateTime.parse(date);
+      return DateFormat('dd MMM yyyy, HH:mm').format(parsedDate);
+    } catch (_) {
+      return date;
+    }
   }
 }
