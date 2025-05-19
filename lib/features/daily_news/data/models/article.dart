@@ -1,27 +1,26 @@
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 
 class ArticleModel extends ArticleEntity {
-  const ArticleModel(
-    super.author,
-    super.id,
-    super.title,
-    super.description,
-    super.url,
-    super.urlToImage,
-    super.publishedAt,
-    super.content,
-  );
+  const ArticleModel({
+    int? id,
+    String? author,
+    String? title,
+    String? description,
+    String? url,
+    String? urlToImage,
+    String? publishedAt,
+    String? content,
+  });
 
-  factory ArticleModel.fromJson(Map<String, dynamic> json) {
+  factory ArticleModel.fromJson(Map<String, dynamic> map) {
     return ArticleModel(
-      json['author'] as String?,
-      json['id'] as int?,
-      json['title'] as String?,
-      json['description'] as String?,
-      json['url'] as String?,
-      json['urlToImage'] as String?,
-      json['publishedAt'] as String?,
-      json['content'] as String?,
+      author: map['author'] ?? "",
+      title: map['title'] ?? "",
+      description: map['description'] ?? "",
+      url: map['url'] ?? "",
+      urlToImage: map['urlToImage'] ?? "",
+      publishedAt: map['publishedAt'] ?? "",
+      content: map['content'] ?? "",
     );
-  }
+  } 
 }

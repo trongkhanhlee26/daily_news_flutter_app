@@ -12,6 +12,8 @@ class ArticleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (article == null) return const SizedBox.shrink();
+
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 14, end: 14, top: 10),
       height: MediaQuery.of(context).size.width / 2.2,
@@ -32,7 +34,7 @@ class ArticleWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 3,
             height: double.maxFinite,
             decoration: BoxDecoration(
-              color: Colors.black.withValues(),
+              color: Colors.black.withValues(alpha: 20),
               image: DecorationImage(
                 image: imageProvider,
                 fit: BoxFit.cover,
@@ -50,7 +52,7 @@ class ArticleWidget extends StatelessWidget {
             height: double.maxFinite,
             child: const CupertinoActivityIndicator(),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(),
+              color: Colors.black.withValues(alpha: 20),
           
             ),
       
