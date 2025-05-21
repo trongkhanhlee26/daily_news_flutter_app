@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter_1/features/daily_news/data/data_sources/local/DAO/app_database.dart';
 import 'package:flutter_1/features/daily_news/data/data_sources/remote/news_api_service.dart';
 import 'package:flutter_1/features/daily_news/data/repository/article_repository_impl.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/r
 import 'package:get_it/get_it.dart';
 
 final s1 = GetIt.instance;
+
+final EventBus eventBus = EventBus();
 
 Future<void> initializeDependencies() async {
   final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();

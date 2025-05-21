@@ -49,14 +49,14 @@ class DailyNews extends StatelessWidget {
             itemExtent: MediaQuery.of(context).size.width / 2.2,
             cacheExtent: 800,
             itemBuilder: (context, index) {
-              final article = state.articles![index];
-              return ArticleWidget(
-                key: ValueKey(article.id),
-                article: article,
-                isRemovable: true,
-                onRemove: (article) => onRemoveArticle(context, article),
-                onArticlePressed: (article) => onArticlePressed(context, article),
-              );
+              // final article = state.articles![index];
+              // return ArticleWidget(
+              //   key: ValueKey(article.id),
+              //   article: article,
+              //   isRemovable: true,
+              //   onRemove: (article) => onRemoveArticle(context, article),
+              //   onArticlePressed: (article) => onArticlePressed(context, article),
+              // );
             },
           );
         }
@@ -73,7 +73,7 @@ class DailyNews extends StatelessWidget {
     Navigator.pushNamed(context, '/SavedArticles');
   }
 
-  void onRemoveArticle(BuildContext context, ArticleEntity article) {
-    BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(article));
-  }
+  // void onRemoveArticle(BuildContext context, ArticleEntity article) {
+  //   BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(article));
+  // }
 }

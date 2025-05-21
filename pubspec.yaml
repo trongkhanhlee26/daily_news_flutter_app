@@ -47,6 +47,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   sqflite: ^2.4.2
   ionicons: ^0.2.2
+  event_bus: ^2.0.1
   
 
 
