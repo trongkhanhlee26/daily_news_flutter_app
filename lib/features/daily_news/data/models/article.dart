@@ -1,5 +1,7 @@
+import 'package:floor/floor.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 
+@Entity(tableName: 'article', primaryKeys: ['id'])
 class ArticleModel extends ArticleEntity {
   const ArticleModel({
     int? id,
@@ -10,7 +12,16 @@ class ArticleModel extends ArticleEntity {
     String? urlToImage,
     String? publishedAt,
     String? content,
-  });
+  }) : super(
+          id: id,
+          author: author,
+          title: title,
+          description: description,
+          url: url,
+          urlToImage: urlToImage,
+          publishedAt: publishedAt,
+          content: content,
+        );
 
   factory ArticleModel.fromJson(Map<String, dynamic> map) {
     return ArticleModel(
@@ -23,4 +34,17 @@ class ArticleModel extends ArticleEntity {
       content: map['content'] ?? "",
     );
   } 
+
+  factory ArticleModel.fromEntity(ArticleEntity entity) {
+    return ArticleModel(
+      id: entity.id,
+      author: entity.author,
+      title: entity.title,
+      description: entity.description,
+      url: entity.url,
+      urlToImage: entity.urlToImage,
+      publishedAt: entity.publishedAt,
+      content: entity.content,
+    );
+  }
 }

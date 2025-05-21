@@ -55,7 +55,7 @@ class _NewsApiService implements NewsApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    List<ArticleModel> _value;
+    late List<ArticleModel> _value;
     try {
       _value = _result.data!['articles']
           .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
