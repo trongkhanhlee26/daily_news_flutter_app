@@ -57,8 +57,9 @@ class _NewsApiService implements NewsApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late List<ArticleModel> _value;
     try {
-      _value = _result.data!['articles']
-          .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
+      final articles = _result.data!['articles'] as List<dynamic>;
+      _value = articles
+          .map((i) => ArticleModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

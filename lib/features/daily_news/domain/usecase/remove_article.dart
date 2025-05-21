@@ -8,7 +8,7 @@ class RemoveArticleUseCase implements UseCase<void, ArticleEntity>{
   RemoveArticleUseCase(this._articleRepository);
 
   @override
-  Future<void> call({ArticleEntity ? params}){
-    return _articleRepository.removeArticle(params!);
+  Future<void> call({ArticleEntity ? params}) async{
+    return await _articleRepository.removeArticle(params!);
   }
 }

@@ -174,7 +174,7 @@ class _$ArticleDao extends ArticleDao {
   }
 
   @override
-  Future<void> deleteArticle(ArticleModel ArticleModel) async {
-    await _articleModelDeletionAdapter.delete(ArticleModel);
+  Future<void> deleteArticle(ArticleModel articleModel) async {
+    await _articleModelDeletionAdapter.delete(articleModel);
   }
 }

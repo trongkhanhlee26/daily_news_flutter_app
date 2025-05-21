@@ -58,10 +58,11 @@ class SavedArticles extends HookWidget {
         return ArticleWidget(
           article: articles[index],
           isRemovable: true,
-          onRemove: (article) => onRemoveArticle(context, articles),
+          onRemove: (article) => onRemoveArticle(context, article),
           onArticlePressed: (article) => onArticlePressed(context, article),
         );
       },
+      cacheExtent: 500,
     );
   }
 
@@ -69,8 +70,8 @@ class SavedArticles extends HookWidget {
     Navigator.pop(context);
   }
 
-  void onRemoveArticle(BuildContext context, List<ArticleEntity> articles) {
-    BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(articles[0]));
+  void onRemoveArticle(BuildContext context, ArticleEntity article) {
+    BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(article));
   }
 
   void onArticlePressed(BuildContext context, ArticleEntity article) {

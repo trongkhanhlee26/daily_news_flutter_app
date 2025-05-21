@@ -8,7 +8,7 @@ class GetSavedArticleUseCase implements UseCase<List<ArticleEntity>, void>{
   GetSavedArticleUseCase(this._articleRepository);
 
   @override
-  Future<List<ArticleEntity>> call({void params}){
-    return _articleRepository.getSavedArticles();
+  Future<List<ArticleEntity>> call({void params}) async {
+    return await _articleRepository.getSavedArticles();
   }
 } 

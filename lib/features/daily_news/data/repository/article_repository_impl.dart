@@ -46,12 +46,12 @@ class ArticleRepositoryImpl implements ArticleRepository{
   }
   
   @override
-  Future<void> removeArticle(ArticleEntity article) {
-    return _appDatabase.articleDao.deleteArticle(ArticleModel.fromEntity(article));
+  Future<void> removeArticle(ArticleEntity article) async{
+    return await _appDatabase.articleDao.deleteArticle(ArticleModel.fromEntity(article));
   }
   
   @override
-  Future<void> saveArticle(ArticleEntity article) {
-    return _appDatabase.articleDao.insertArticle(ArticleModel.fromEntity(article));
+  Future<void> saveArticle(ArticleEntity article) async{
+    return await _appDatabase.articleDao.insertArticle(ArticleModel.fromEntity(article));
   }
 }

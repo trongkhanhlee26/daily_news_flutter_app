@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
@@ -47,18 +45,19 @@ class DailyNews extends StatelessWidget {
         } 
         if (state is RemoteArticleSuccess) {
           return ListView.builder(
-            itemBuilder: (context, index){
-              return GestureDetector(
-                onTap: () => _onArticlePressed(context, state.articles![index]),
-                child: ArticleWidget(
-                  article: state.articles![index],
-                  isRemovable: true,
-                  onRemove: (article) => onRemoveArticle(context, article),
-                  onArticlePressed: (article) => onArticlePressed(context, article),
-                ),
+            itemCount: state.articles!.length,
+            itemExtent: MediaQuery.of(context).size.width / 2.2,
+            cacheExtent: 800,
+            itemBuilder: (context, index) {
+              final article = state.articles![index];
+              return ArticleWidget(
+                key: ValueKey(article.id),
+                article: article,
+                isRemovable: true,
+                onRemove: (article) => onRemoveArticle(context, article),
+                onArticlePressed: (article) => onArticlePressed(context, article),
               );
             },
-            itemCount: state.articles!.length,
           );
         }
         return const SizedBox();
@@ -66,7 +65,7 @@ class DailyNews extends StatelessWidget {
     );
   }
 
-  void _onArticlePressed(BuildContext context, ArticleEntity article) {
+  void onArticlePressed(BuildContext context, ArticleEntity article) {
     Navigator.pushNamed(context, '/ArticleDetails', arguments: article);
   }
 
@@ -76,9 +75,5 @@ class DailyNews extends StatelessWidget {
 
   void onRemoveArticle(BuildContext context, ArticleEntity article) {
     BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(article));
-  }
-
-  void onArticlePressed(BuildContext context, ArticleEntity article) {
-    Navigator.pushNamed(context, '/ArticleDetails', arguments: article);
   }
 }

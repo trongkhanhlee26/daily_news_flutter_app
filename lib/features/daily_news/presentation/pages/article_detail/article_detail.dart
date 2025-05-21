@@ -21,7 +21,7 @@ class ArticleDetailView extends HookWidget {
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
-        floatingActionButton: _floatingActionButton(),
+        floatingActionButton: floatingActionButton(),
       ),
     );
   }
@@ -30,7 +30,7 @@ class ArticleDetailView extends HookWidget {
     return AppBar(
       leading: Builder(builder: (context) => GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => _onBackButtonTapped(context),
+        onTap: () => onBackButtonTapped(context),
         child: const Icon(Ionicons.chevron_back, color: Colors.black),
       ),
       ),
@@ -41,15 +41,15 @@ class ArticleDetailView extends HookWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _buildArticleTitleAndDate(),
-          _buildArticleImage(),
-          _buildArticleDescription(),
+          buildArticleTitleAndDate(),
+          buildArticleImage(),
+          buildArticleDescription(),
         ],
       ),
     );
   }
 
-  Widget _buildArticleTitleAndDate() {
+  Widget buildArticleTitleAndDate() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
@@ -76,7 +76,7 @@ class ArticleDetailView extends HookWidget {
     );
   }
 
-  Widget _buildArticleImage() {
+  Widget buildArticleImage() {
     return Container(
       width: double.maxFinite,
       height: 250,
@@ -88,7 +88,7 @@ class ArticleDetailView extends HookWidget {
     );
   }
 
-  Widget _buildArticleDescription() {
+  Widget buildArticleDescription() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
       child: Text(
@@ -98,20 +98,20 @@ class ArticleDetailView extends HookWidget {
     );
   }
 
-  Widget _floatingActionButton() {
+  Widget floatingActionButton() {
     return Builder(
       builder: (context) => FloatingActionButton(
-        onPressed: () => _onFloatingActionButtonPressed(context),
+        onPressed: () => onFloatingActionButtonPressed(context),
         child: const Icon(Ionicons.bookmark, color: Colors.white),
       ),  
     );
   }
 
-  void _onBackButtonTapped(BuildContext context) {
+  void onBackButtonTapped(BuildContext context) {
     Navigator.pop(context);
   }
 
-  void _onFloatingActionButtonPressed(BuildContext context) {
+  void onFloatingActionButtonPressed(BuildContext context) {
     BlocProvider.of<LocalArticleBloc>(context).add(SaveArticle(article!));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

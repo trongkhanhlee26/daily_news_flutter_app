@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_1/core/resources/data_state.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/remote_article_event.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/remote_article_state.dart';
