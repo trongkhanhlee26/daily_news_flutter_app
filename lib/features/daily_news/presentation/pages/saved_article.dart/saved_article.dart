@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_1/core/events/article_events.dart';
-import 'package:flutter_1/features/daily_news/data/models/article.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_state.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_1/features/daily_news/presentation/wigdets/article_tile.
 import 'package:flutter_1/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 import '../../bloc/article/local/local_article_event.dart';
 
 class SavedArticles extends HookWidget {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_1/core/events/article_events.dart';
@@ -77,14 +78,31 @@ class ArticleDetailView extends HookWidget {
   }
 
   Widget buildArticleImage() {
+    final imageUrl = article?.urlToImage;
+    final imageWidget = imageUrl == null || imageUrl.isEmpty
+        ? const Icon(Icons.image, size: 40, color: Colors.grey)
+        : CachedNetworkImage(
+            imageUrl: imageUrl,
+            fadeInDuration: Duration.zero,
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+                ),
+            ),
+            progressIndicatorBuilder: (context, url, progress) =>
+                const CupertinoActivityIndicator(),
+            errorWidget: (context, url, error) =>
+                const Icon(Icons.broken_image, size: 40, color: Colors.grey),
+          );
     return Container(
       width: double.maxFinite,
       height: 250,
       margin: const EdgeInsets.only(top: 14),
-      child: Image.network(
-        article!.urlToImage!,
-        fit: BoxFit.cover,
-      ),
+      child: imageWidget,
     );
   }
 
@@ -112,15 +130,6 @@ class ArticleDetailView extends HookWidget {
   }
 
   void onFloatingActionButtonPressed(BuildContext context) {
-  //   if (article == null || article!.id == null) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(
-  //       content: Text('Cannot save: Article data is missing'),
-  //       backgroundColor: Colors.red,
-  //     ),
-  //   );
-  //   return;
-  // }
     BlocProvider.of<LocalArticleBloc>(context).add(SaveArticle(article!));
     eventBus.fire(ArticleSavedEvent(article!.hashCode));
       ScaffoldMessenger.of(context).showSnackBar(
