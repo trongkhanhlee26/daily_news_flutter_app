@@ -1,9 +1,12 @@
+import 'package:flutter_1/features/daily_news/data/models/article.dart';
+import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
+
 class ArticleSavedEvent {
-  final int ? articleId;
-  ArticleSavedEvent(this.articleId);
+  final ArticleEntity ? article;
+  ArticleSavedEvent(this.article);
 }
 
 class ArticleRemovedEvent {
-  final int ? articleId;
-  ArticleRemovedEvent(this.articleId);
+  final ArticleEntity ? article;
+  ArticleRemovedEvent(this.article);
 }

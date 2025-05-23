@@ -5,6 +5,7 @@ import 'package:flutter_1/core/events/article_events.dart';
 import 'package:flutter_1/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_event.dart';
+import 'package:flutter_1/features/daily_news/presentation/bloc/article/local/local_article_state.dart';
 import 'package:flutter_1/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,13 +18,21 @@ class ArticleDetailView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocProvider(
-      create: (_) => s1<LocalArticleBloc>(),
-      child: Scaffold(
-        appBar: _buildAppBar(),
-        body: _buildBody(),
-        floatingActionButton: floatingActionButton(),
-      ),
+      create: (_) => s1<LocalArticleBloc>()..add(const GetSavedArticles()),
+      child: BlocBuilder<LocalArticleBloc, LocalArticleState>(builder: (context, state) {
+        bool isSaved = false;
+        if(state is LocalArticleDone){
+          isSaved = state.articles!.any((a) => a.url != null && a.url == article?.url);
+        }
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(),
+          floatingActionButton: floatingActionButton(isSaved, context),
+        );  
+      }
+    )
     );
   }
 
@@ -116,12 +125,15 @@ class ArticleDetailView extends HookWidget {
     );
   }
 
-  Widget floatingActionButton() {
+  Widget floatingActionButton(bool isSaved, BuildContext context) {
     return Builder(
       builder: (context) => FloatingActionButton(
-        onPressed: () => onFloatingActionButtonPressed(context),
-        child: const Icon(Ionicons.bookmark, color: Colors.white),
-      ),  
+        onPressed: isSaved ? null : () => onFloatingActionButtonPressed(context),
+        backgroundColor: isSaved ? Colors.grey : Theme.of(context).primaryColor,
+        child: Icon(isSaved ? Ionicons.bookmark : Ionicons.bookmark_outline,
+        color: Colors.white,
+        ),
+      ),
     );
   }
 
@@ -131,7 +143,7 @@ class ArticleDetailView extends HookWidget {
 
   void onFloatingActionButtonPressed(BuildContext context) {
     BlocProvider.of<LocalArticleBloc>(context).add(SaveArticle(article!));
-    eventBus.fire(ArticleSavedEvent(article!.hashCode));
+    eventBus.fire(ArticleSavedEvent(article!));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Article saved to favorites'),

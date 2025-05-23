@@ -6,12 +6,12 @@ import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/r
 import 'package:flutter_1/features/daily_news/presentation/bloc/article/remote/remote_article_state.dart';
 import 'package:flutter_1/features/daily_news/presentation/wigdets/article_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 class DailyNews extends StatelessWidget {
   const DailyNews({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: _appBar(context),
       body: _body(context),
@@ -53,7 +53,7 @@ class DailyNews extends StatelessWidget {
               return ArticleWidget(
                 key: ValueKey(article.id),
                 article: article,
-                isRemovable: true,
+                isRemovable: false,
                 onRemove: (article) => onRemoveArticle(context, article),
                 onArticlePressed: (article) => onArticlePressed(context, article),
               );

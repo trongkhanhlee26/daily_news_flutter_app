@@ -16,11 +16,13 @@ class SavedArticles extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
-    final subscription = eventBus.on<ArticleSavedEvent>().listen((event) {
-      BlocProvider.of<LocalArticleBloc>(context).add(const GetSavedArticles());
-    });
-    return subscription.cancel;
-  }, []);
+      final savedSub = eventBus.on<ArticleSavedEvent>().listen((event) {
+        BlocProvider.of<LocalArticleBloc>(context).add(const GetSavedArticles());
+      });
+      return (){
+        savedSub.cancel();
+      };
+    }, []);
     return BlocProvider(create: (_) => 
       s1<LocalArticleBloc>()..add(const GetSavedArticles()),
       child: Scaffold(
@@ -79,6 +81,7 @@ class SavedArticles extends HookWidget {
 
   void onRemoveArticle(BuildContext context, ArticleEntity article) {
     BlocProvider.of<LocalArticleBloc>(context).add(RemoveArticle(article));
+    eventBus.fire(ArticleRemovedEvent(article));
   }
 
   void onArticlePressed(BuildContext context, ArticleEntity article) {
